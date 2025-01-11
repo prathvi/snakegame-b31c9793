@@ -12,6 +12,9 @@
 <script>
   const canvas = document.getElementById('gameCanvas');
   const ctx = canvas.getContext('2d');
+  let score = 0;
+  let level = 1;
+  const levelThreshold = 5; // Number of food items to eat to advance to the next level
   let snake = [{x: 160, y: 160}, {x: 140, y: 160}, {x: 120, y: 160}];
   let dx = 20;
   let dy = 0;
@@ -36,6 +39,14 @@
       drawSnake();
       main();
     }, speed);
+    displayScoreAndLevel();
+  }
+
+
+  function displayScoreAndLevel() {
+    ctx.font = '14px Arial';
+    ctx.fillStyle = 'black';
+    ctx.fillText('Score: ' + score + ' - Level: ' + level + ' - Next Level: ' + ((level * levelThreshold) - score), 10, canvas.height - 10);
   }
 
   function clearCanvas() {
@@ -56,6 +67,11 @@
     if (didEatFood) {
       createFood();
       increaseSpeed();
+      score++;
+      if (score % levelThreshold === 0) {
+        level++;
+        speed *= 0.9; // Increase speed with each level
+      }
     } else {
       snake.pop();
     }
