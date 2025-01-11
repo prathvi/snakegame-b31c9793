@@ -31,6 +31,9 @@
   function main() {
     if (didGameEnd()) return;
 
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    displayGameOver();
+    displayScoreAndLevel();
     changingDirection = false;
     setTimeout(function onTick() {
       clearCanvas();
@@ -148,3 +151,16 @@
 </script>
 </body>
 </html>
+  function displayGameOver() {
+    ctx.fillStyle = 'red';
+    ctx.font = '48px serif';
+    ctx.fillText('Game Over!', 50, 200);
+  }
+
+  function displayScoreAndLevel() {
+    ctx.fillStyle = 'black';
+    ctx.font = '24px serif';
+    ctx.fillText(`Score: ${score}`, 10, 50);
+    ctx.fillText(`Level: ${level}`, 10, 80);
+    ctx.fillText(`Next Level: ${levelThreshold * level - score}`, 10, 110);
+  }
